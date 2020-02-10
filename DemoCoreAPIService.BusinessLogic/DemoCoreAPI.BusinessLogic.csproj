@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Profiles\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DemoCoreAPI.Data\DemoCoreAPI.Data.csproj" />
+    <ProjectReference Include="..\DemoCoreAPI.DomainModels\DemoCoreAPI.DomainModels.csproj" />
+  </ItemGroup>
+
+</Project>

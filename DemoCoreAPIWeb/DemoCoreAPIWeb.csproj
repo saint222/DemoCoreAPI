@@ -23,5 +23,9 @@
     <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DemoCoreAPIService.BusinessLogic\DemoCoreAPI.BusinessLogic.csproj" />
+  </ItemGroup>
+
 
 </Project>
