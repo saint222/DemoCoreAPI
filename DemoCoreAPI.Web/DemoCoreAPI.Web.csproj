@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DemoCoreAPIService.BusinessLogic\DemoCoreAPI.BusinessLogic.csproj" />
+    <ProjectReference Include="..\DemoCoreAPI.BusinessLogic\DemoCoreAPI.BusinessLogic.csproj" />
   </ItemGroup>
 
 
