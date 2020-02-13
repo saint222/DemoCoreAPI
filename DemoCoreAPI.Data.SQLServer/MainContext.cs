@@ -20,6 +20,7 @@ namespace DemoCoreAPI.Data.SQLServer
                     Id = 1,
                     FirstName = "Aleksandr",
                     LastName = "Kalyuganov",
+                    Age = 29,
                     Email = "saint12maloj@gmail.com",
                     Password = "qqLQK/L5n5GqeiaCEkxVrUxlkbAWMmPUlOBSmlGXnPA=",
                     IsAdmin = true
