@@ -13,6 +13,7 @@ namespace DemoCoreAPI.Web.DIServices
         public static void RegisterServices(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<MainContext>(options => options.UseSqlServer(connectionString));
+            services.AddScoped<DbContext, MainContext>();
         }
     }
 }
