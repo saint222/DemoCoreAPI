@@ -1,4 +1,8 @@
-﻿using DemoCoreAPI.Data.SQLServer;
+﻿using DemoCoreAPI.BusinessLogic.Implementation;
+using DemoCoreAPI.BusinessLogic.Interfaces;
+using DemoCoreAPI.Data;
+using DemoCoreAPI.Data.SQLServer;
+using DemoCoreAPI.DomainModels.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,6 +18,8 @@ namespace DemoCoreAPI.Web.DIServices
         {
             services.AddDbContext<MainContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<DbContext, MainContext>();
+            services.AddScoped<IRepository<UserDb>, SqlServRepository<UserDb>>();
+            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }
