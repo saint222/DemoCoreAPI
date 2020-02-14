@@ -32,7 +32,7 @@ namespace DemoCoreAPIWeb
                 Log.Fatal(ex, "The application failed while starting");
                 throw;
             }
-            finally 
+            finally
             {
                 Log.CloseAndFlush();
             }
@@ -44,7 +44,11 @@ namespace DemoCoreAPIWeb
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                    .UseDefaultServiceProvider(options =>
+                    {
+                        options.ValidateScopes = true; //Setting to true will validate scopes in all environments. This has performance implications.
+                    });
                 });
         }
     }
