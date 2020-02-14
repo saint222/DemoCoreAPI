@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using DemoCoreAPI.Data.SQLServer;
+using DemoCoreAPI.Web.DIServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,10 +32,7 @@ namespace DemoCoreAPIWeb
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MainContext>(options => //using Microsoft.EntityFrameworkCore;
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("APIConnectionString"));
-            });
+            services.RegisterServices(Configuration.GetConnectionString("APIConnectionString"));                
             services.AddControllers();
 
             services.AddSwaggerGen(setup =>
