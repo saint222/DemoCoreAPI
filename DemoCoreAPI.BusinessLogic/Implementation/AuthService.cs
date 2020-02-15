@@ -23,11 +23,17 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "LoginViewModel can not be null.");
+            if (string.IsNullOrWhiteSpace(model.Email))
+                throw new ArgumentException("Email can not be empty.");
+            if (string.IsNullOrWhiteSpace(model.Password))
+                throw new ArgumentException("Password can not be empty.");            
 
             try
             {
                 var hashedPassword = HashPassword(model.Password);
                 var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
+                if (user == null)
+                    throw new ArgumentException("User with such credentials doesn't exist.");
                 return new LoginResultViewModel
                 {
                     Id = user.Id,
@@ -50,8 +56,10 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 throw new ArgumentNullException(nameof(model));
             var isValid = ComparePasswords(model);
             if (!isValid)
-                throw new Exception("Passwords don't match!");
-
+                throw new ArgumentException("Passwords don't match!");
+            var exists = _repo.Where(x=>x.Email == model.Email).Any();
+            if(exists)
+                throw new ArgumentException("User with such email already exists!");
             try
             {
                 var hashedPassword = HashPassword(model.Password);
