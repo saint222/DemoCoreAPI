@@ -19,9 +19,9 @@ namespace DemoCoreAPI.Web.Controllers
             _authService = authService;
         }
         
-        // POST: api/Authentication
+        // POST: api/Authentication/login
         [HttpPost]
-        [Route("/login")]
+        [Route("login")]
         public IActionResult Login(LoginViewModel model)
         {
             if (model == null)
@@ -30,15 +30,15 @@ namespace DemoCoreAPI.Web.Controllers
             return Json(loginResult);
         }
 
-        // POST: api/Authentication
+        // POST: api/Authentication/register
         [HttpPost]
-        [Route("/register")]
+        [Route("register")]
         public IActionResult Register(RegisterViewModel model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
-            var loginResult = _authService.Register(model);
-            return Json(loginResult);
+            var registerResult = _authService.Register(model);
+            return Json(registerResult);
         }
     }
 }
