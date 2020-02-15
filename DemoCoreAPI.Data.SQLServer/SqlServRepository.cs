@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DemoCoreAPI.Data.Errors;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace DemoCoreAPI.Data.SQLServer
 {
@@ -46,7 +45,14 @@ namespace DemoCoreAPI.Data.SQLServer
 
         public int SaveChanges()
         {
-           return _context.SaveChanges();
+            try
+            {
+                return _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException("Exception occured while working with the Db", ex);
+            }
         }        
     }
 }
