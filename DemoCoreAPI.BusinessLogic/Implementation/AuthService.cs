@@ -17,23 +17,31 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
         {
             _repo = repo;
             if (repo == null)
-                throw new ArgumentNullException(nameof(repo));
+                throw new ArgumentNullException(nameof(repo), "Repo is null.");
         }
         public LoginResultViewModel Login(LoginViewModel model)
         {
             if (model == null)
-                throw new ArgumentNullException(nameof(model));
-            var hashedPassword = HashPassword(model.Password);
-            var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
-            return new LoginResultViewModel
+                throw new ArgumentNullException(nameof(model), "LoginViewModel can not be null.");
+
+            try
             {
-                Id = user.Id,
-                Age = user.Age,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                IsAdmin = user.IsAdmin
-            };
+                var hashedPassword = HashPassword(model.Password);
+                var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
+                return new LoginResultViewModel
+                {
+                    Id = user.Id,
+                    Age = user.Age,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    IsAdmin = user.IsAdmin
+                };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public RegisterResultViewModel Register(RegisterViewModel model)
@@ -43,20 +51,29 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             var isValid = ComparePasswords(model);
             if (!isValid)
                 throw new Exception("Passwords don't match!");
-            var hashedPassword = HashPassword(model.Password);
-            var user = new UserDb();
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.Age = model.Age;
-            user.Email = model.Email;
-            user.Password = hashedPassword;
-            _repo.Add(user);
-            _repo.SaveChanges();
-            return new RegisterResultViewModel()
+
+            try
             {
-                Message = "User has been created",
-                Success = true
-            };
+                var hashedPassword = HashPassword(model.Password);
+                var user = new UserDb();
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Age = model.Age;
+                user.Email = model.Email;
+                user.Password = hashedPassword;
+                _repo.Add(user);
+                _repo.SaveChanges();
+
+                return new RegisterResultViewModel()
+                {
+                    Message = "User has been created",
+                    Success = true
+                };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private string HashPassword(string password)

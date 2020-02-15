@@ -5,6 +5,7 @@ using DemoCoreAPI.Data.SQLServer;
 using DemoCoreAPI.DomainModels.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -33,7 +33,9 @@ namespace DemoCoreAPIWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegisterServices(Configuration.GetConnectionString("APIConnectionString"));                
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //Microsoft.AspNetCore.Mvc.NewtonsoftJson for correct work (NET Core 3.0 does not support circular references)
 
             services.AddSwaggerGen(setup =>
             {
@@ -68,9 +70,9 @@ namespace DemoCoreAPIWeb
                 setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger for Demo Core API by Kalyuganov");
             });
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints => //must be always THE LAST ROW in 3.0+
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers(); //maps controller actions to requests using attribute-based routing.
             });
         }
     }
