@@ -35,11 +35,9 @@ namespace DemoCoreAPI.Web.Controllers
                 throw new ArgumentNullException(nameof(model), "LoginViewModel can not be null.");
             try
             {
-                var loginResult = _authService.Login(model);
-                if (loginResult == null)
-                    throw new ArgumentException("There is not a user with such credentials.");
-                var response = CreateToken(loginResult);
-                return Ok(response);
+                var user = _authService.Login(model); // existence is checked in the BLL                
+                var loginResult = CreateToken(user);
+                return Ok(loginResult);
             }
             catch (Exception ex)
             {
@@ -72,7 +70,6 @@ namespace DemoCoreAPI.Web.Controllers
             var claims = new List<Claim> //using System.Security.Claims;
             {
                 new Claim(JwtRegisteredClaimNames.Sub, model.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, model.Email),                
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()), //using System.IdentityModel.Tokens.Jwt;
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString())
             };
@@ -85,8 +82,13 @@ namespace DemoCoreAPI.Web.Controllers
                         new JwtPayload(claims));
             var output = new
             {
-                Access_Token = new JwtSecurityTokenHandler().WriteToken(token),                
-                isAdmin = model.IsAdmin                
+                access_Token = new JwtSecurityTokenHandler().WriteToken(token), // Core will return props in camelCase
+                id = model.Id,                
+                firstName = model.FirstName,
+                lastName = model.LastName,
+                email = model.Email,
+                age = model.Age,
+                isAdmin = model.IsAdmin
             };
             return output;
         }

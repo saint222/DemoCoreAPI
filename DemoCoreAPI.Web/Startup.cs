@@ -60,19 +60,20 @@ namespace DemoCoreAPIWeb
             });
 
             services.AddSwaggerGen(setup =>
-            {
-                setup.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "DemoCoreApiWebApplication" });
+            {                //version!!!
+                setup.SwaggerDoc("v3", new OpenApiInfo { Version = "v3", Title = "DemoCoreApiWebApplication" });
 
                 // These 3 lines set the XML comments for Swagger (don't forget add some lines of the PropertyGroup in .csproj !!!).
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 setup.IncludeXmlComments(xmlPath);
+
                 setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: {token}\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.ApiKey // in OpenAPI3 ApiKey authentications schema - for Bearer
                 });
             });
         }
@@ -96,8 +97,8 @@ namespace DemoCoreAPIWeb
 
             app.UseSwagger();
             app.UseSwaggerUI(setup =>
-            {
-                setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger for Demo Core API by Kalyuganov");
+            {                                //version!!!
+                setup.SwaggerEndpoint("/swagger/v3/swagger.json", "Swagger for Demo Core API by Kalyuganov");
             });
 
             app.UseEndpoints(endpoints => //must be always THE LAST ROW in 3.0+
