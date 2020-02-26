@@ -1,4 +1,5 @@
-﻿using DemoCoreAPI.BusinessLogic.Interfaces;
+﻿using AutoMapper;
+using DemoCoreAPI.BusinessLogic.Interfaces;
 using DemoCoreAPI.BusinessLogic.ViewModels;
 using DemoCoreAPI.Data;
 using DemoCoreAPI.DomainModels.Models;
@@ -13,11 +14,13 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
     public class AuthService : IAuthService
     {
         private readonly IRepository<UserDb> _repo;
-        public AuthService(IRepository<UserDb> repo)
+        private readonly IMapper _mapper;
+        public AuthService(IRepository<UserDb> repo, IMapper mapper)
         {
             _repo = repo;
             if (repo == null)
                 throw new ArgumentNullException(nameof(repo), "Repo is null.");
+            _mapper = mapper;
         }
         public LoginResultViewModel Login(LoginViewModel model)
         {
@@ -34,15 +37,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
                 if (user == null)
                     throw new ArgumentException("User with such credentials doesn't exist.");
-                return new LoginResultViewModel
-                {
-                    Id = user.Id,
-                    Age = user.Age,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    IsAdmin = user.IsAdmin
-                };
+                return _mapper.Map<LoginResultViewModel>(user);
             }
             catch (Exception)
             {
@@ -63,20 +58,10 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             try
             {
                 var hashedPassword = HashPassword(model.Password);
-                var user = new UserDb();
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Age = model.Age;
-                user.Email = model.Email;
-                user.Password = hashedPassword;
+                var user = _mapper.Map<UserDb>(model);               
                 _repo.Add(user);
                 _repo.SaveChanges();
-
-                return new RegisterResultViewModel()
-                {
-                    Message = "User has been created",
-                    Success = true
-                };
+                return _mapper.Map<RegisterResultViewModel>(user);                
             }
             catch (Exception)
             {

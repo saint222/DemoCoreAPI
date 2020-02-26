@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using DemoCoreAPI.BusinessLogic.Mapping;
 using DemoCoreAPI.Data.SQLServer;
 using DemoCoreAPI.Web.DIServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -39,7 +41,7 @@ namespace DemoCoreAPIWeb
             services.AddControllers()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             //Microsoft.AspNetCore.Mvc.NewtonsoftJson for correct work (NET Core 3.0 does not support circular references)
-
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
