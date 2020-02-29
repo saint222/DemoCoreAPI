@@ -70,20 +70,33 @@ namespace DemoCoreAPIWeb
             });
 
             services.AddSwaggerGen(setup =>
-            {                //version!!!
-                setup.SwaggerDoc("v3", new OpenApiInfo { Version = "v3", Title = "DemoCoreApiWebApplication" });
+            {                
+                setup.SwaggerDoc("v5", new OpenApiInfo { Version = "v5", Title = "DemoCoreApiWebApplication" });
 
                 // These 3 lines set the XML comments for Swagger (don't forget add some lines of the PropertyGroup in .csproj !!!).
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 setup.IncludeXmlComments(xmlPath);
 
-                setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                setup.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer + {token}\"",
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "bearer" // lower case here is OBLIGATORY
+                    });
+                setup.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: {token}\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey // in OpenAPI3 ApiKey authentications schema - for Bearer
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Id = "Bearer", //The name of the previously defined security scheme.
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        }, new List<string>()
+                    }
                 });
             });
         }
@@ -108,7 +121,7 @@ namespace DemoCoreAPIWeb
             app.UseSwagger();
             app.UseSwaggerUI(setup =>
             {                                //version!!!
-                setup.SwaggerEndpoint("/swagger/v3/swagger.json", "Swagger for Demo Core API by Kalyuganov");
+                setup.SwaggerEndpoint("/swagger/v5/swagger.json", "Swagger for Demo Core API by Kalyuganov");
             });
 
             app.UseEndpoints(endpoints => //must be always THE LAST ROW in 3.0+
