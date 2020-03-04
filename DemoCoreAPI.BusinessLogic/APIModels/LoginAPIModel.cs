@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DemoCoreAPI.BusinessLogic.ViewModels
 {
-    public class LoginResultViewModel
+    public class LoginAPIModel
     {
         public long Id { get; set; }
         public string FirstName { get; set; }

@@ -6,10 +6,15 @@ using System.Text;
 
 namespace DemoCoreAPI.Data.SQLServer
 {
-    public class MainContext : DbContext
+    public class APIContext : DbContext
     {
-        public MainContext(DbContextOptions options) : base(options) { }
-        
+        public APIContext(DbContextOptions<APIContext> options) : base(options) 
+        {
+            Database.Migrate(); // Applies any pending migrations for the context to the database. 
+                                // Will create the database if it does not already exist.
+                                // This API is exclusive with Database.EnsureCreated().
+        }
+
         public DbSet<UserDb> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
