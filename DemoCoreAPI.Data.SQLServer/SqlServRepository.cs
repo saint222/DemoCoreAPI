@@ -8,8 +8,8 @@ namespace DemoCoreAPI.Data.SQLServer
 {
     public class SqlServRepository<T> : IRepository<T> where T : class
     {
-        private readonly DbContext _context;
-        public SqlServRepository(DbContext context)
+        private readonly APIContext _context;
+        public SqlServRepository(APIContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));

@@ -11,10 +11,10 @@ namespace DemoCoreAPI.BusinessLogic.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<UserDb, LoginViewModel>().ReverseMap();
-            CreateMap<UserDb, LoginResultViewModel>().ReverseMap();
-            CreateMap<UserDb, RegisterResultViewModel>().ReverseMap();
-            CreateMap<UserDb, RegisterViewModel>().ReverseMap();
+            CreateMap<UserDb, LoginBindingModel>().ReverseMap();
+            CreateMap<UserDb, LoginAPIModel>().ReverseMap();
+            CreateMap<UserDb, RegisterAPIModel>().ReverseMap();
+            CreateMap<UserDb, RegisterBindingModel>().ReverseMap();
         }
     }
 }

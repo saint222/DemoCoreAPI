@@ -22,7 +22,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 throw new ArgumentNullException(nameof(repo), "Repo is null.");
             _mapper = mapper;
         }
-        public LoginResultViewModel Login(LoginViewModel model)
+        public LoginAPIModel Login(LoginBindingModel model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "LoginViewModel can not be null.");
@@ -37,7 +37,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
                 if (user == null)
                     throw new ArgumentException("User with such credentials doesn't exist.");
-                return _mapper.Map<LoginResultViewModel>(user);
+                return _mapper.Map<LoginAPIModel>(user);
             }
             catch (Exception)
             {
@@ -45,7 +45,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             }
         }
 
-        public RegisterResultViewModel Register(RegisterViewModel model)
+        public RegisterAPIModel Register(RegisterBindingModel model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
@@ -57,11 +57,11 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 throw new ArgumentException("User with such email already exists!");
             try
             {
-                var hashedPassword = HashPassword(model.Password);
+                model.Password = HashPassword(model.Password);
                 var user = _mapper.Map<UserDb>(model);               
                 _repo.Add(user);
                 _repo.SaveChanges();
-                return _mapper.Map<RegisterResultViewModel>(user);                
+                return _mapper.Map<RegisterAPIModel>(user);                
             }
             catch (Exception)
             {
@@ -81,7 +81,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 return Convert.ToBase64String(algo.ComputeHash(input));
             }
         }
-        private bool ComparePasswords(RegisterViewModel model)
+        private bool ComparePasswords(RegisterBindingModel model)
         {
             if (model.Password == model.PasswordConfirmation)
                 return true;

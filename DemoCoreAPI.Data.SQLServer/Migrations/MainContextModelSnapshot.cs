@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DemoCoreAPI.Data.SQLServer.Migrations
 {
-    [DbContext(typeof(MainContext))]
+    [DbContext(typeof(APIContext))]
     partial class MainContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

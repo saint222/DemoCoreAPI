@@ -29,7 +29,7 @@ namespace DemoCoreAPI.Web.Controllers
         // POST: api/Authentication/login
         [HttpPost]
         [Route("login")]
-        public IActionResult Login(LoginViewModel model)
+        public IActionResult Login(LoginBindingModel model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "LoginViewModel can not be null.");
@@ -49,7 +49,7 @@ namespace DemoCoreAPI.Web.Controllers
         // POST: api/Authentication/register
         [HttpPost]
         [Route("register")]
-        public IActionResult Register(RegisterViewModel model)
+        public IActionResult Register(RegisterBindingModel model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model), "RegisterViewModel can not be null.");
@@ -65,7 +65,7 @@ namespace DemoCoreAPI.Web.Controllers
             }
         }
 
-        private dynamic CreateToken(LoginResultViewModel model)
+        private dynamic CreateToken(LoginAPIModel model)
         {
             var claims = new List<Claim> //using System.Security.Claims;
             {
