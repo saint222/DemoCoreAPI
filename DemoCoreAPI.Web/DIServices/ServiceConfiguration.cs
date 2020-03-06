@@ -20,6 +20,7 @@ namespace DemoCoreAPI.Web.DIServices
             services.AddDbContext<APIContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IRepository<UserDb>, SqlServRepository<UserDb>>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAdminService, AdminService>();
         }
     }
 }
