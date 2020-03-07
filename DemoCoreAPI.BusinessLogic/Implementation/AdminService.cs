@@ -40,7 +40,8 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
 
         public UpdatedUserAPIModel UpdateUser(UpdateUserBindingModel model)
         {
-            var updatedUser = _mapper.Map<UserDb>(model);
+            var updatedUser = _repo.FindById(model.Id);
+            _mapper.Map(model, updatedUser);
             _repo.Update(updatedUser);
             _repo.SaveChanges();
             return _mapper.Map<UpdatedUserAPIModel>(updatedUser);
