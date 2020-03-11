@@ -12,5 +12,6 @@ namespace DemoCoreAPI.BusinessLogic.Interfaces
         ICollection<UserAPIModel> GetAllUsers();
         NewUserAPIModel CreateNewUser(NewUserBindingModel model);
         UpdatedUserAPIModel UpdateUser(UpdateUserBindingModel model);
+        DeleteUserApiModel RemoveUser(long id);
     }
 }

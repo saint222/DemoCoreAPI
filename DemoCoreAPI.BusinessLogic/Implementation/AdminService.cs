@@ -46,5 +46,22 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             _repo.SaveChanges();
             return _mapper.Map<UpdatedUserAPIModel>(updatedUser);
         }
+
+        public DeleteUserApiModel RemoveUser(long id)
+        {
+            try
+            {
+                var userToDelete = _repo.FindById(id);
+                if(userToDelete == null)
+                    throw new ArgumentException($"There is not a user with the id = {id}.");
+                _repo.Remove(userToDelete);
+                _repo.SaveChanges();
+                return _mapper.Map<DeleteUserApiModel>(userToDelete);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

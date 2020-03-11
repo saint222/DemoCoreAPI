@@ -22,6 +22,7 @@ namespace DemoCoreAPI.BusinessLogic.Mapping
             CreateMap<UserDb, NewUserAPIModel>().ReverseMap();
             CreateMap<UserDb, UpdatedUserAPIModel>().ReverseMap();
             CreateMap<UserDb, UserAPIModel>().ReverseMap();
+            CreateMap<UserDb, DeleteUserApiModel>().ReverseMap();
         }
     }
 }

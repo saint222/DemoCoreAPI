@@ -88,5 +88,22 @@ namespace DemoCoreAPI.Web.Controllers
                 return BadRequest(ex);
             }
         }
+        [HttpDelete]
+        [Route("Delete")]
+        public IActionResult DeleteUser(long id)
+        {            
+            try
+            {
+                if (id <= 0)
+                    throw new ArgumentNullException(nameof(id), "Id can not be 0 or negative.");
+                var result = _adminService.RemoveUser(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Exception occured while deleting the user");
+                return BadRequest(ex);
+            }
+        }
     }
 }
