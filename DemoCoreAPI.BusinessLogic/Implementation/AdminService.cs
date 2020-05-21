@@ -32,6 +32,8 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
         }
         public NewUserAPIModel CreateNewUser(NewUserBindingModel model)
         {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model), "NewUserBindingModel can not be null");
             var newUser = _mapper.Map<UserDb>(model);
             _repo.Add(newUser);
             _repo.SaveChanges();
@@ -40,6 +42,8 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
 
         public UpdatedUserAPIModel UpdateUser(UpdateUserBindingModel model)
         {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model), "UpdateUserBindingModel can not be null");
             var updatedUser = _repo.FindById(model.Id);
             _mapper.Map(model, updatedUser);
             _repo.Update(updatedUser);

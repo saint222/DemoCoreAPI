@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DemoCoreAPI.BusinessLogic.Errors;
 using DemoCoreAPI.BusinessLogic.Interfaces;
 using DemoCoreAPI.BusinessLogic.ViewModels;
 using DemoCoreAPI.Data;
@@ -36,7 +37,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 var hashedPassword = HashPassword(model.Password);
                 var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
                 if (user == null)
-                    throw new ArgumentException("User with such credentials doesn't exist.");
+                    throw new NotFoundException("User is not found.");
                 return _mapper.Map<LoginAPIModel>(user);
             }
             catch (Exception)
@@ -49,12 +50,12 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
-            var isValid = ComparePasswords(model);
-            if (!isValid)
-                throw new ArgumentException("Passwords don't match!");
+            var isMatch = ComparePasswords(model);
+            if (!isMatch)
+                throw new PasswordMismatchException("Passwords don't match!");
             var exists = _repo.Where(x=>x.Email == model.Email).Any();
             if(exists)
-                throw new ArgumentException("User with such email already exists!");
+                throw new EmailDuplicateException("User with such email already exists.");
             try
             {
                 model.Password = HashPassword(model.Password);

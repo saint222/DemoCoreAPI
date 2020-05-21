@@ -37,15 +37,7 @@ namespace DemoCoreAPIWeb
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDistributedMemoryCache();
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = "DemoCoreAPI.Session";
-                options.Cookie.IsEssential = true;
-                options.Cookie.HttpOnly = true;
-                options.IdleTimeout = TimeSpan.FromSeconds(60);
-            });
-            services.RegisterServices(Configuration.GetConnectionString("APIConnectionString"));
+            services.RegisterServices(Configuration.GetConnectionString("AlternativeApiConnectionString"));
             services.AddControllers()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             //Microsoft.AspNetCore.Mvc.NewtonsoftJson for correct work (NET Core 3.0 does not support circular references)
@@ -108,7 +100,6 @@ namespace DemoCoreAPIWeb
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSession();
             app.UseHttpsRedirection();
 
             app.UseSerilogRequestLogging();
