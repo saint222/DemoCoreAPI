@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System.Text;
+using DemoCoreAPI.BusinessLogic.Errors;
+using System.Net;
 
 namespace DemoCoreAPI.Web.Controllers
 {
@@ -31,13 +33,16 @@ namespace DemoCoreAPI.Web.Controllers
         [Route("login")]
         public IActionResult Login(LoginBindingModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException(nameof(model), "LoginViewModel can not be null.");
             try
             {
                 var user = _authService.Login(model); // existence is checked in the BLL                
                 var loginResult = CreateToken(user);
                 return Ok(loginResult);
+            }
+            catch (NotFoundException ex)
+            {
+                Log.Error(ex, $"User with email {model.Email} is not found.");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -51,12 +56,20 @@ namespace DemoCoreAPI.Web.Controllers
         [Route("register")]
         public IActionResult Register(RegisterBindingModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException(nameof(model), "RegisterViewModel can not be null.");
             try
             {
                 var registerResult = _authService.Register(model);
                 return Ok(registerResult);
+            }
+            catch (PasswordMismatchException ex)
+            {
+                Log.Error(ex, "Passwords mismatch.");
+                return StatusCode(422, ex.Message);
+            }
+            catch (EmailDuplicateException ex) 
+            {
+                Log.Error(ex, "User with such email already exists.");
+                return StatusCode(422, ex.Message);
             }
             catch (Exception ex)
             {

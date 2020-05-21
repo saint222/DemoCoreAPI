@@ -80,8 +80,6 @@ namespace DemoCoreAPI.Web.Controllers
         [Route("Add")]
         public IActionResult AddNewUser(NewUserBindingModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException(nameof(model), "NewUserModel can not be null.");
             try
             {
                 var newUser = _adminService.CreateNewUser(model);
