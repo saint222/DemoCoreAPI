@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ClosedXML.Excel;
 using DemoCoreAPI.BusinessLogic.APIModels;
 using DemoCoreAPI.BusinessLogic.BindingModels;
+using DemoCoreAPI.BusinessLogic.Errors;
 using DemoCoreAPI.BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,7 @@ namespace DemoCoreAPI.Web.Controllers
         {
             _adminService = adminService;
         }
+
         [HttpGet]
         [Route("Users")]
         public IActionResult GetUsers()
@@ -32,12 +34,14 @@ namespace DemoCoreAPI.Web.Controllers
             try
             {
                 var users = _adminService.GetAllUsers();
+                if (users.Count() == 0)
+                    return NotFound();
                 return Ok(users);
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Exception occured while retrieving users");
-                return NotFound(ex);
+                Log.Error(ex, "Exception occured while retrieving data.");
+                return ServerError(ex);
             }
         }
 
@@ -69,10 +73,20 @@ namespace DemoCoreAPI.Web.Controllers
                 var user = _adminService.GetUserById(id);
                 return Ok(user);
             }
+            catch (ArgumentException ex)
+            {
+                Log.Error(ex, $"Id {id} is invalid.");
+                return BadRequest(ex);
+            }
+            catch (NotFoundException ex)
+            {
+                Log.Error(ex, $"User with Id {id} doesn't exist.");
+                return BadRequest(ex);
+            }
             catch (Exception ex)
             {
-                Log.Error(ex, "Exception occured while retrieving a user");
-                return NotFound(ex);
+                Log.Error(ex, "Exception occured while retrieving data.");
+                return ServerError(ex);
             }
         }
 
@@ -85,10 +99,25 @@ namespace DemoCoreAPI.Web.Controllers
                 var newUser = _adminService.CreateNewUser(model);
                 return Ok(newUser);
             }
+            catch (ArgumentNullException ex)
+            {
+                Log.Error(ex, $"Model {model} is null");
+                return BadRequest(ex);
+            }
+            catch (ArgumentException ex)
+            {
+                Log.Error(ex, $"The fields of the model {model} are null");
+                return BadRequest(ex);
+            }
+            catch (EmailDuplicateException ex)
+            {
+                Log.Error(ex, "User with such email already exists.");
+                return BadRequest(ex); ;
+            }
             catch (Exception ex)
             {
-                Log.Error(ex, "Exception occured while a new user adding.");
-                return BadRequest(ex);
+                Log.Error(ex, "Exception occured while creating a new user.");
+                return ServerError(ex);
             }
         }
 
@@ -96,17 +125,25 @@ namespace DemoCoreAPI.Web.Controllers
         [Route("Update")]
         public IActionResult UpdateUser(UpdateUserBindingModel model)
         {
-            if (model == null)
-                throw new ArgumentNullException(nameof(model), "UpdateUserModel can not be null.");
             try
             {
                 var updateUser = _adminService.UpdateUser(model);
                 return Ok(updateUser);
             }
+            catch (ArgumentNullException ex)
+            {
+                Log.Error(ex, $"Model {model} is null");
+                return BadRequest(ex);
+            }
+            catch (NotFoundException ex)
+            {
+                Log.Error(ex, $"User {model} is not found.");
+                return BadRequest(ex);
+            }
             catch (Exception ex)
             {
-                Log.Error(ex, "Exception occured while updating the user");
-                return BadRequest(ex);
+                Log.Error(ex, "Exception occured while updating user.");
+                return ServerError(ex);
             }
         }
         [HttpDelete]
@@ -115,17 +152,31 @@ namespace DemoCoreAPI.Web.Controllers
         {
             try
             {
-                if (id <= 0)
-                    throw new ArgumentNullException(nameof(id), "Id can not be 0 or negative.");
                 var result = _adminService.RemoveUser(id);
                 return Ok(result);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                Log.Error(ex, "Exception occured while deleting the user");
+                Log.Error(ex, $"Id {id} is invalid.");
                 return BadRequest(ex);
             }
+            catch (NotFoundException ex)
+            {
+                Log.Error(ex, $"User with Id {id} doesn't exist.");
+                return BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Exception occured while deleting user.");
+                return ServerError(ex);
+            }
         }
+
+        private IActionResult ServerError(Exception ex)
+        {
+            return Json(new { Message = "Internal server error."}, ex);
+        }
+
         private XLWorkbook GenerateXLDoc(ICollection<UserAPIModel> users)
         {
             var workBook = new XLWorkbook();

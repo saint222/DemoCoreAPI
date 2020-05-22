@@ -14,6 +14,7 @@ using Serilog;
 using System.Text;
 using DemoCoreAPI.BusinessLogic.Errors;
 using System.Net;
+using DocumentFormat.OpenXml.Office2013.Drawing.Chart;
 
 namespace DemoCoreAPI.Web.Controllers
 {
@@ -35,19 +36,26 @@ namespace DemoCoreAPI.Web.Controllers
         {
             try
             {
-                var user = _authService.Login(model); // existence is checked in the BLL                
+                var user = _authService.Login(model);
+                if (user == null)
+                    return NotFound();
                 var loginResult = CreateToken(user);
                 return Ok(loginResult);
             }
-            catch (NotFoundException ex)
+            catch (ArgumentNullException ex)
             {
-                Log.Error(ex, $"User with email {model.Email} is not found.");
-                return NotFound(ex.Message);
+                Log.Error(ex, $"Model {model} is null");
+                return BadRequest(ex);
+            }
+            catch (ArgumentException ex)
+            {
+                Log.Error(ex, $"The fields of the model {model} are null");
+                return BadRequest(ex);
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Exception occured while logging.");
-                return BadRequest(ex);
+                return ServerError(ex);
             }
         }
 
@@ -61,21 +69,37 @@ namespace DemoCoreAPI.Web.Controllers
                 var registerResult = _authService.Register(model);
                 return Ok(registerResult);
             }
-            catch (PasswordMismatchException ex)
+            catch (ArgumentNullException ex)
             {
-                Log.Error(ex, "Passwords mismatch.");
-                return StatusCode(422, ex.Message);
+                Log.Error(ex, $"Model {model} is null");
+                return BadRequest(ex);
+            }
+            catch (ArgumentException ex)
+            {
+                Log.Error(ex, $"The fields of the model {model} are null");
+                return BadRequest(ex);
             }
             catch (EmailDuplicateException ex) 
             {
                 Log.Error(ex, "User with such email already exists.");
-                return StatusCode(422, ex.Message);
+                return BadRequest(ex); ;
+            }
+            catch (PasswordMismatchException ex)
+            {
+                Log.Error(ex, "Passwords mismatch.");
+                return UnprocessableEntity(ex);
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Exception occured while rigistration.");
-                return BadRequest(ex);
+                return ServerError(ex);
             }
+        }
+
+        private IActionResult ServerError(Exception ex)
+        {
+            Response.StatusCode = 500;
+            return Json(new { Message = "Server error" }, ex);
         }
 
         private dynamic CreateToken(LoginAPIModel model)

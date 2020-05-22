@@ -20,54 +20,40 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
         {
             _repo = repo;
             if (repo == null)
-                throw new ArgumentNullException(nameof(repo), "Repo is null.");
+                throw new ArgumentNullException("Repo is null.");
             _mapper = mapper;
         }
         public LoginAPIModel Login(LoginBindingModel model)
         {
             if (model == null)
-                throw new ArgumentNullException(nameof(model), "LoginViewModel can not be null.");
-            if (string.IsNullOrWhiteSpace(model.Email))
-                throw new ArgumentException("Email can not be empty.");
-            if (string.IsNullOrWhiteSpace(model.Password))
-                throw new ArgumentException("Password can not be empty.");            
+                throw new ArgumentNullException("LoginViewModel can not be null.");
+            if (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
+                throw new ArgumentException("Email and Password can not be null/empty.");
 
-            try
-            {
-                var hashedPassword = HashPassword(model.Password);
-                var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
-                if (user == null)
-                    throw new NotFoundException("User is not found.");
-                return _mapper.Map<LoginAPIModel>(user);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var hashedPassword = HashPassword(model.Password);
+            var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
+
+            return _mapper.Map<LoginAPIModel>(user);
         }
 
         public RegisterAPIModel Register(RegisterBindingModel model)
         {
             if (model == null)
-                throw new ArgumentNullException(nameof(model));
+                throw new ArgumentNullException("RegisterViewModel can not be null.");
+            if (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
+                throw new ArgumentException("Email and Password can not be null/empty.");
             var isMatch = ComparePasswords(model);
             if (!isMatch)
                 throw new PasswordMismatchException("Passwords don't match!");
-            var exists = _repo.Where(x=>x.Email == model.Email).Any();
-            if(exists)
+            var exists = _repo.Where(x => x.Email == model.Email).Any();
+            if (exists)
                 throw new EmailDuplicateException("User with such email already exists.");
-            try
-            {
-                model.Password = HashPassword(model.Password);
-                var user = _mapper.Map<UserDb>(model);               
-                _repo.Add(user);
-                _repo.SaveChanges();
-                return _mapper.Map<RegisterAPIModel>(user);                
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            model.Password = HashPassword(model.Password);
+            var user = _mapper.Map<UserDb>(model);
+            _repo.Add(user);
+            _repo.SaveChanges();
+            return _mapper.Map<RegisterAPIModel>(user);
         }
 
         private string HashPassword(string password)
