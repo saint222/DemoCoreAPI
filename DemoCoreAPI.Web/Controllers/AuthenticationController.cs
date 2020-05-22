@@ -15,6 +15,7 @@ using System.Text;
 using DemoCoreAPI.BusinessLogic.Errors;
 using System.Net;
 using DocumentFormat.OpenXml.Office2013.Drawing.Chart;
+using DemoCoreAPI.DomainModels.Enums;
 
 namespace DemoCoreAPI.Web.Controllers
 {
@@ -107,6 +108,7 @@ namespace DemoCoreAPI.Web.Controllers
             var claims = new List<Claim> //using System.Security.Claims;
             {
                 new Claim(JwtRegisteredClaimNames.Sub, model.Id.ToString()),
+                new Claim(ClaimTypes.Role, Enum.GetName(typeof(Roles), model.Role)), // ROLES !!!
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()), //using System.IdentityModel.Tokens.Jwt;
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString())
             };
@@ -121,11 +123,7 @@ namespace DemoCoreAPI.Web.Controllers
             {
                 access_Token = new JwtSecurityTokenHandler().WriteToken(token), // Core will return props in camelCase
                 id = model.Id,                
-                firstName = model.FirstName,
-                lastName = model.LastName,
-                email = model.Email,
-                age = model.Age,
-                isAdmin = model.IsAdmin
+                role = model.Role
             };
             return output;
         }

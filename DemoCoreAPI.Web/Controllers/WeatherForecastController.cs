@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DemoCoreAPI.DomainModels.Enums;
+using DemoCoreAPI.Web.Utilites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace DemoCoreAPIWeb.Controllers
 {
-    [Authorize]
+    [AuthEnumRoles(Roles.Admin, Roles.Counselor)] // just for tests
     [ApiController]
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase

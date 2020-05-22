@@ -9,6 +9,8 @@ using DemoCoreAPI.BusinessLogic.APIModels;
 using DemoCoreAPI.BusinessLogic.BindingModels;
 using DemoCoreAPI.BusinessLogic.Errors;
 using DemoCoreAPI.BusinessLogic.Interfaces;
+using DemoCoreAPI.DomainModels.Enums;
+using DemoCoreAPI.Web.Utilites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +18,7 @@ using Serilog;
 
 namespace DemoCoreAPI.Web.Controllers
 {
-    //[Authorize()]
+    [AuthEnumRoles(Roles.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : Controller

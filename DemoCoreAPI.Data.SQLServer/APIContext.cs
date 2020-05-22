@@ -25,7 +25,7 @@ namespace DemoCoreAPI.Data.SQLServer
                     Age = 29,
                     Email = "saint12maloj@gmail.com",
                     Password = "qqLQK/L5n5GqeiaCEkxVrUxlkbAWMmPUlOBSmlGXnPA=",
-                    IsAdmin = true
+                    Role = DomainModels.Enums.Roles.Admin
                 });
             base.OnModelCreating(modelBuilder);
         }
