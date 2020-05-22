@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoCoreAPI.DomainModels.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,6 +12,6 @@ namespace DemoCoreAPI.BusinessLogic.ViewModels
         public string LastName { get; set; }
         public int Age { get; set; }
         public string Email { get; set; }
-        public bool IsAdmin { get; set; }
+        public Roles Role { get; set; }
     }
 }

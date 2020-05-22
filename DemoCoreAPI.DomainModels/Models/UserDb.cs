@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoCoreAPI.DomainModels.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -25,6 +26,6 @@ namespace DemoCoreAPI.DomainModels.Models
         [Required]
         [MaxLength(50), MinLength(1)]
         public string Password { get; set; }
-        public bool IsAdmin { get; set; } = false;
+        public Roles Role { get; set; }
     }
 }
