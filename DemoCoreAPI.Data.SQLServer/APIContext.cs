@@ -5,11 +5,14 @@ namespace DemoCoreAPI.Data.SQLServer
 {
     public class APIContext : DbContext
     {
-        public APIContext(DbContextOptions<APIContext> options) : base(options) 
+        public APIContext(DbContextOptions<APIContext> options) : base(options)
         {
-            Database.Migrate(); // Applies any pending migrations for the context to the database. 
-                                // Will create the database if it does not already exist.
-                                // This API is exclusive with Database.EnsureCreated().
+            if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            {
+                Database.Migrate(); // Applies any pending migrations for the context to the database. 
+                                    // Will create the database if it does not already exist.
+                                    // This API is exclusive with Database.EnsureCreated().
+            }
         }
 
         public DbSet<UserDb> Users { get; set; }
