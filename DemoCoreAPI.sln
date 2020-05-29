@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCoreAPI.Data.SQLServer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCoreAPI.Web", "DemoCoreAPI.Web\DemoCoreAPI.Web.csproj", "{E2AF7FD8-F132-4DAB-B4F8-99DCA1AEBCF5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{22440127-6973-4368-9DBF-D634BDA3DF59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoCoreApi.Services.Test", "DemoCoreApi.Services.Test\DemoCoreApi.Services.Test.csproj", "{23009F35-8662-4463-8E48-526A99A1EE95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +43,16 @@ Global
 		{E2AF7FD8-F132-4DAB-B4F8-99DCA1AEBCF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2AF7FD8-F132-4DAB-B4F8-99DCA1AEBCF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2AF7FD8-F132-4DAB-B4F8-99DCA1AEBCF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23009F35-8662-4463-8E48-526A99A1EE95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23009F35-8662-4463-8E48-526A99A1EE95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23009F35-8662-4463-8E48-526A99A1EE95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23009F35-8662-4463-8E48-526A99A1EE95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{23009F35-8662-4463-8E48-526A99A1EE95} = {22440127-6973-4368-9DBF-D634BDA3DF59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {469F8558-CE67-41F3-B47C-D67020351EF5}
