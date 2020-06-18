@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DemoCoreAPI.BusinessLogic.APIModels;
 using DemoCoreAPI.BusinessLogic.BindingModels;
+using DemoCoreAPI.BusinessLogic.Commands;
 using DemoCoreAPI.BusinessLogic.ViewModels;
 using DemoCoreAPI.DomainModels.Models;
 using System;
@@ -23,6 +24,8 @@ namespace DemoCoreAPI.BusinessLogic.Mapping
             CreateMap<UserDb, UpdatedUserAPIModel>().ReverseMap();
             CreateMap<UserDb, UserAPIModel>().ReverseMap();
             CreateMap<UserDb, DeleteUserApiModel>().ReverseMap();
+            CreateMap<UserDb, RegisterCommand>().ReverseMap();
+            CreateMap<UserDb, LoginCommand>().ReverseMap();
         }
     }
 }

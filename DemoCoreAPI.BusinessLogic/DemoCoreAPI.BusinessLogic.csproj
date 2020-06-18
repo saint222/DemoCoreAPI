@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="MediatR" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DemoCoreAPI.Data.SQLServer\DemoCoreAPI.Data.SQLServer.csproj" />
     <ProjectReference Include="..\DemoCoreAPI.Data\DemoCoreAPI.Data.csproj" />
     <ProjectReference Include="..\DemoCoreAPI.DomainModels\DemoCoreAPI.DomainModels.csproj" />
   </ItemGroup>

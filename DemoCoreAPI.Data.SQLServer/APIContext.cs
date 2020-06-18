@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoCoreAPI.Data.SQLServer
 {
-    public class APIContext : DbContext
+    public class ApiContext : DbContext
     {
-        public APIContext(DbContextOptions<APIContext> options) : base(options)
+        public ApiContext(DbContextOptions<ApiContext> options) : base(options)
         {
             if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
             {

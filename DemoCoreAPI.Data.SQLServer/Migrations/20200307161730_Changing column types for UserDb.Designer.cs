@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DemoCoreAPI.Data.SQLServer.Migrations
 {
-    [DbContext(typeof(APIContext))]
+    [DbContext(typeof(ApiContext))]
     [Migration("20200307161730_Changing column types for UserDb")]
     partial class ChangingcolumntypesforUserDb
     {

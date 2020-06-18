@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DemoCoreAPI.Data.SQLServer.Migrations
 {
-    [DbContext(typeof(APIContext))]
+    [DbContext(typeof(ApiContext))]
     [Migration("20200213224721_DbChangedAgeAdded")]
     partial class DbChangedAgeAdded
     {

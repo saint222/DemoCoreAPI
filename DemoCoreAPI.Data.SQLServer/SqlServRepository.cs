@@ -3,14 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace DemoCoreAPI.Data.SQLServer
 {
     public class SqlServRepository<T> : IRepository<T> where T : class
     {
-        private readonly APIContext _context;
+        private readonly ApiContext _context;
         private readonly DbSet<T> _dbSet;
-        public SqlServRepository(APIContext context)
+        public SqlServRepository(ApiContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));

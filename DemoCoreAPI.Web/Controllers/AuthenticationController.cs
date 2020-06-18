@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DemoCoreAPI.BusinessLogic.Interfaces;
 using DemoCoreAPI.BusinessLogic.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System.Text;
 using DemoCoreAPI.BusinessLogic.Errors;
-using System.Net;
-using DocumentFormat.OpenXml.Office2013.Drawing.Chart;
 using DemoCoreAPI.DomainModels.Enums;
+using MediatR;
+using DemoCoreAPI.BusinessLogic.Commands;
 
 namespace DemoCoreAPI.Web.Controllers
 {
@@ -24,20 +21,21 @@ namespace DemoCoreAPI.Web.Controllers
     [ApiController]
     public class AuthenticationController : Controller
     {
-        public readonly IAuthService _authService;
-        public AuthenticationController(IAuthService authService)
+        private readonly IMediator _mediator;
+
+        public AuthenticationController(IMediator mediator)
         {
-            _authService = authService;
+            _mediator = mediator;
         }
 
         // POST: api/Authentication/login
         [HttpPost]
         [Route("login")]
-        public IActionResult Login(LoginBindingModel model)
+        public async Task<IActionResult> Login(LoginCommand model)
         {
             try
             {
-                var user = _authService.Login(model);
+                var user = await _mediator.Send(model);
                 if (user == null)
                     return NotFound();
                 var loginResult = CreateToken(user);
@@ -63,11 +61,11 @@ namespace DemoCoreAPI.Web.Controllers
         // POST: api/Authentication/register
         [HttpPost]
         [Route("register")]
-        public IActionResult Register(RegisterBindingModel model)
+        public async Task<IActionResult> Register(RegisterCommand model)
         {
             try
             {
-                var registerResult = _authService.Register(model);
+                var registerResult = await _mediator.Send(model);
                 return Ok(registerResult);
             }
             catch (ArgumentNullException ex)
@@ -121,9 +119,9 @@ namespace DemoCoreAPI.Web.Controllers
                         new JwtPayload(claims));
             var output = new
             {
-                access_Token = new JwtSecurityTokenHandler().WriteToken(token), // Core will return props in camelCase
                 id = model.Id,                
-                role = model.Role
+                role = Enum.GetName(typeof(Roles), model.Role),
+                token = new JwtSecurityTokenHandler().WriteToken(token) // Core will return props in camelCase
             };
             return output;
         }

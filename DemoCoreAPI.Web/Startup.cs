@@ -9,6 +9,7 @@ using AutoMapper;
 using DemoCoreAPI.BusinessLogic.Mapping;
 using DemoCoreAPI.Data.SQLServer;
 using DemoCoreAPI.Web.DIServices;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

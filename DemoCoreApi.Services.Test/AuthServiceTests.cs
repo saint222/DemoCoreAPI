@@ -7,11 +7,9 @@ using DemoCoreAPI.Data;
 using DemoCoreAPI.Data.SQLServer;
 using DemoCoreAPI.DomainModels.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Linq;
 
 namespace DemoCoreApi.Services.Test
 {
@@ -272,12 +270,12 @@ namespace DemoCoreApi.Services.Test
             }
         }
 
-        private APIContext GetContext()
+        private ApiContext GetContext()
         {
-            var options = new DbContextOptionsBuilder<APIContext>()
+            var options = new DbContextOptionsBuilder<ApiContext>()
                 .UseInMemoryDatabase(databaseName: "TempDemoCoreApiDb")
                 .Options;
-            var context = new APIContext(options);
+            var context = new ApiContext(options);
 
             return context;
         }

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DemoCoreAPIWeb.Controllers
 {
-    [AuthEnumRoles(Roles.Admin, Roles.Counselor)] // just for tests
+    // just for tests
     [ApiController]
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
