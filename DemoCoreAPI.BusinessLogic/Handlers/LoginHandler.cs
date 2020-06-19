@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DemoCoreAPI.BusinessLogic.Commands;
+using DemoCoreAPI.BusinessLogic.Errors;
 using DemoCoreAPI.BusinessLogic.ViewModels;
 using DemoCoreAPI.Data.SQLServer;
 using MediatR;
@@ -31,7 +32,8 @@ namespace DemoCoreAPI.BusinessLogic.Handlers
 
             var hashedPassword = Utilities.Utilities.HashPassword(model.Password);
             var user = _context.Users.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
-
+            if (user == null)
+                throw new NotFoundException("User was not found.");
             return _mapper.Map<LoginAPIModel>(user);
         }
     }

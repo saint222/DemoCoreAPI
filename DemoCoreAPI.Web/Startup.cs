@@ -9,6 +9,7 @@ using AutoMapper;
 using DemoCoreAPI.BusinessLogic.Mapping;
 using DemoCoreAPI.Data.SQLServer;
 using DemoCoreAPI.Web.DIServices;
+using DemoCoreAPI.Web.Middleware;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -115,6 +116,8 @@ namespace DemoCoreAPIWeb
             {                                //version!!!
                 setup.SwaggerEndpoint("/swagger/v5/swagger.json", "Swagger for Demo Core API by Kalyuganov");
             });
+
+            app.UseMiddleware(typeof(ApiExceptionMiddleware));
 
             app.UseEndpoints(endpoints => //must be always THE LAST ROW in 3.0+
             {
