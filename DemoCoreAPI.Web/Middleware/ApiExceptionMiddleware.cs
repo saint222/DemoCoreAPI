@@ -52,12 +52,12 @@ namespace DemoCoreAPI.Web.Middleware
                         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                         break;
                 }
-            }
 
-            context.Response.ContentType = "application/json";
-            context.Response.Headers.Add("exception", "validationException");
-            var errorJson = JsonConvert.SerializeObject(new { message = ex.Message, stackTrace = ex.StackTrace }, _jsonSettings);
-            await context.Response.WriteAsync(errorJson);
+                context.Response.ContentType = "application/json";
+                context.Response.Headers.Add("exception", "validationException");
+                var errorJson = JsonConvert.SerializeObject(new { message = ex.Message, stackTrace = ex.StackTrace }, _jsonSettings);
+                await context.Response.WriteAsync(errorJson);
+            }
         }
     }
 }
