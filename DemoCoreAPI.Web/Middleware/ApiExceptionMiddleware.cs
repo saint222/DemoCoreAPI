@@ -58,7 +58,6 @@ namespace DemoCoreAPI.Web.Middleware
                 }
                 Log.Error(ex, null);
                 context.Response.ContentType = "application/json";
-                context.Response.Headers.Add("exception", "serverException");
                 var errorJson = JsonConvert.SerializeObject(new { message = ex.Message, stackTrace = ex.StackTrace }, _jsonSettings);
                 await context.Response.WriteAsync(errorJson);
             }
