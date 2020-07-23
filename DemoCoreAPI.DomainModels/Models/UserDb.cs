@@ -17,8 +17,11 @@ namespace DemoCoreAPI.DomainModels.Models
         [MaxLength(50), MinLength(1)]
         public string LastName { get; set; }
         [Required]
-        [Range(1, 150)]
-        public int Age { get; set; }
+        [MaxLength(50), MinLength(1)]
+        public string Patronymic { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
         [Required]
         [EmailAddress]
         [MaxLength(50)]
@@ -27,5 +30,6 @@ namespace DemoCoreAPI.DomainModels.Models
         [MaxLength(50), MinLength(1)]
         public string Password { get; set; }
         public Roles Role { get; set; }
+        public string Discriminator { get; set; }
     }
 }

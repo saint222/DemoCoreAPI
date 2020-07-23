@@ -1,5 +1,7 @@
 ﻿using DemoCoreAPI.DomainModels.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Globalization;
 
 namespace DemoCoreAPI.Data.SQLServer
 {
@@ -15,7 +17,14 @@ namespace DemoCoreAPI.Data.SQLServer
             }
         }
 
+        public DbSet<SchoolDb> Schools { get; set; }
+        public DbSet<ClassDb> Classes { get; set; }
         public DbSet<UserDb> Users { get; set; }
+        public DbSet<PupilDb> Pupils { get; set; }
+        public DbSet<TeacherDb> Teachers { get; set; }
+        public DbSet<SchoolPhoneNumberDb> SchoolPhoneNumbers { get; set; }
+        public DbSet<SchoolAddressDb> SchoolAddresses { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,7 +34,8 @@ namespace DemoCoreAPI.Data.SQLServer
                     Id = 1,
                     FirstName = "Aleksandr",
                     LastName = "Kalyuganov",
-                    Age = 29,
+                    Patronymic = "Anatoljevich",
+                    DateOfBirth = DateTime.Parse("03/18/1990", CultureInfo.InvariantCulture),
                     Email = "saint12maloj@gmail.com",
                     Password = "qqLQK/L5n5GqeiaCEkxVrUxlkbAWMmPUlOBSmlGXnPA=",
                     Role = DomainModels.Enums.Roles.Admin
