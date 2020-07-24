@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class TeacherDb: IUserDb
+    public class PrincipalDb: IUserDb
     {
         [Key]
         public long Id { get; set; }
@@ -30,9 +30,8 @@ namespace DemoCoreAPI.DomainModels.Models
         [Required]
         [MaxLength(50), MinLength(1)]
         public string Password { get; set; }
-        public TeacherSpecialization Specialization { get; set; }
-        public Roles Role { get; set; } = Roles.Teacher;
+        public Roles Role { get; set; } = Roles.Principal;
+        public long SchoolDbId { get; set; }
         public SchoolDb School { get; set; }
-        public ICollection<ClassTeacherDb> ClassTeachers { get; set; }
     }
 }

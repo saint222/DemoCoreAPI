@@ -1,12 +1,15 @@
 ﻿using DemoCoreAPI.DomainModels.Enums;
+using DemoCoreAPI.DomainModels.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class UserDb
+    [NotMapped]
+    public class UserDb: IUserDb
     {
         [Key]
         public long Id { get; set; }

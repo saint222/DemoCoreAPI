@@ -4,14 +4,16 @@ using DemoCoreAPI.Data.SQLServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DemoCoreAPI.Data.SQLServer.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20200724233941_IsHeadTeacher")]
+    partial class IsHeadTeacher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -368,6 +370,9 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<bool>("IsHeadTeacher")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -4,12 +4,10 @@ using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Enums
 {
-    public enum Roles
+    public enum VicePrincipalAreas
     {
-        Admin,
-        Pupil,
-        Principal,
-        Teacher,
-        VicePrincipal
+        Social,
+        Studying,
+        Methodology
     }
 }

@@ -11,5 +11,7 @@ namespace DemoCoreAPI.DomainModels.Models
         public ClassGrades Grade { get; set; }
         public ClassLetters Letter { get; set; }
         public List<PupilDb> Pupils { get; set; }
+        public SchoolDb School { get; set; }
+        public ICollection<ClassTeacherDb> ClassTeachers { get; set; }
     }
 }
