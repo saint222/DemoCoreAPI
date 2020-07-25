@@ -23,7 +23,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 throw new ArgumentNullException("Repo is null.");
             _mapper = mapper;
         }
-        public LoginAPIModel Login(LoginBindingModel model)
+        public LoginApiModel Login(LoginBindingModel model)
         {
             if (model == null)
                 throw new ArgumentNullException("LoginViewModel can not be null.");
@@ -33,10 +33,10 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             var hashedPassword = HashPassword(model.Password);
             var user = _repo.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
 
-            return _mapper.Map<LoginAPIModel>(user);
+            return _mapper.Map<LoginApiModel>(user);
         }
 
-        public RegisterAPIModel Register(RegisterBindingModel model)
+        public RegisterApiModel Register(RegisterBindingModel model)
         {
             if (model == null)
                 throw new ArgumentNullException("RegisterViewModel can not be null.");
@@ -53,7 +53,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             var user = _mapper.Map<UserDb>(model);
             _repo.Add(user);
             _repo.SaveChanges();
-            return _mapper.Map<RegisterAPIModel>(user);
+            return _mapper.Map<RegisterApiModel>(user);
         }
 
         private string HashPassword(string password)

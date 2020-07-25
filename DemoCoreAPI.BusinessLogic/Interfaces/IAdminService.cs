@@ -8,10 +8,10 @@ namespace DemoCoreAPI.BusinessLogic.Interfaces
 {
     public interface IAdminService
     {
-        UserAPIModel GetUserById(long id);
-        ICollection<UserAPIModel> GetAllUsers();
-        NewUserAPIModel CreateNewUser(NewUserBindingModel model);
-        UpdatedUserAPIModel UpdateUser(UpdateUserBindingModel model);
+        UserApiModel GetUserById(long id);
+        ICollection<UserApiModel> GetAllUsers();
+        NewUserApiModel CreateNewUser(NewUserBindingModel model);
+        UpdatedUserApiModel UpdateUser(UpdateUserBindingModel model);
         DeleteUserApiModel RemoveUser(long id);
     }
 }

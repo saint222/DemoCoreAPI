@@ -47,7 +47,7 @@ namespace DemoCoreAPI.Web.Controllers
             return Ok(registerResult);
         }
 
-        private dynamic CreateToken(LoginAPIModel model)
+        private dynamic CreateToken(LoginApiModel model)
         {
             var claims = new List<Claim> //using System.Security.Claims;
             {

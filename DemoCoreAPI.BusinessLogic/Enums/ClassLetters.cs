@@ -6,7 +6,7 @@ namespace DemoCoreAPI.DomainModels.Enums
 {
     public enum ClassLetters
     {
-        A,
+        A = 1,
         B,
         C,
         D,

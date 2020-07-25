@@ -21,23 +21,23 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             _repo = repo;
             _mapper = mapper;
         }
-        public ICollection<UserAPIModel> GetAllUsers()
+        public ICollection<UserApiModel> GetAllUsers()
         {
             var users = _repo.GeAll();
-            return _mapper.Map<ICollection<UserAPIModel>>(users);
+            return _mapper.Map<ICollection<UserApiModel>>(users);
         }
 
-        public UserAPIModel GetUserById(long id)
+        public UserApiModel GetUserById(long id)
         {
             if (id <= 0)
                 throw new ArgumentException("Id can not be negative or 0.");
             var user = _repo.FindById(id);
             if (user == null)
                 throw new NotFoundException("User doesn't exist.");
-            return _mapper.Map<UserAPIModel>(user);
+            return _mapper.Map<UserApiModel>(user);
         }
         
-        public NewUserAPIModel CreateNewUser(NewUserBindingModel model)
+        public NewUserApiModel CreateNewUser(NewUserBindingModel model)
         {
             if (model == null)
                 throw new ArgumentNullException("RegisterViewModel can not be null.");
@@ -49,10 +49,10 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             var newUser = _mapper.Map<UserDb>(model);
             _repo.Add(newUser);
             _repo.SaveChanges();
-            return _mapper.Map<NewUserAPIModel>(newUser);
+            return _mapper.Map<NewUserApiModel>(newUser);
         }
 
-        public UpdatedUserAPIModel UpdateUser(UpdateUserBindingModel model)
+        public UpdatedUserApiModel UpdateUser(UpdateUserBindingModel model)
         {
             if (model == null)
                 throw new ArgumentNullException("UpdateUserBindingModel can not be null");
@@ -62,7 +62,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             _mapper.Map(model, updatedUser);
             _repo.Update(updatedUser);
             _repo.SaveChanges();
-            return _mapper.Map<UpdatedUserAPIModel>(updatedUser);
+            return _mapper.Map<UpdatedUserApiModel>(updatedUser);
         }
 
         public DeleteUserApiModel RemoveUser(long id)

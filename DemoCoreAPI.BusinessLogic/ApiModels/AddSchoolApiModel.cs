@@ -4,9 +4,9 @@ using System.Text;
 
 namespace DemoCoreAPI.BusinessLogic.APIModels
 {
-    public class UpdatedUserApiModel
+    public class AddSchoolApiModel
     {
-        public string Message { get; set; } = "User has been updated";
+        public string Message { get; set; } = "New school has been created";
         public bool Success { get; set; } = true;
     }
 }

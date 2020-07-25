@@ -6,12 +6,12 @@ namespace DemoCoreAPI.DomainModels.Enums
 {
     public enum Regions
     {
-        Brest,
+        Brest = 1,     // as license plates in Belarus
         Vitebsk,
         Gomel,
         Grodno,
-        Mogilev,
         Minsk,
+        Mogilev,
         MinskCity
     }
 }

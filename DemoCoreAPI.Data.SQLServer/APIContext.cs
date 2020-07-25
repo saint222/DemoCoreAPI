@@ -65,7 +65,7 @@ namespace DemoCoreAPI.Data.SQLServer
                     DateOfBirth = DateTime.Parse("03/18/1990", CultureInfo.InvariantCulture),
                     Email = "saint12maloj@gmail.com",
                     Password = "qqLQK/L5n5GqeiaCEkxVrUxlkbAWMmPUlOBSmlGXnPA=",
-                    Role = DomainModels.Enums.Roles.Admin
+                    Role = 0
                 }
                 //new SchoolDb
                 //{

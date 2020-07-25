@@ -89,7 +89,7 @@ namespace DemoCoreAPI.Web.Controllers
             return Ok(result);
         }
 
-        private XLWorkbook GenerateXLDoc(ICollection<UserAPIModel> users)
+        private XLWorkbook GenerateXLDoc(ICollection<UserApiModel> users)
         {
             var workBook = new XLWorkbook();
             var worksheet = workBook.Worksheets.Add("Users");

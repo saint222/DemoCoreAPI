@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DemoCoreAPI.BusinessLogic.APIModels
 {
-    public class UserAPIModel
+    public class UserApiModel
     {
         public long Id { get; set; }
         public string FirstName { get; set; }

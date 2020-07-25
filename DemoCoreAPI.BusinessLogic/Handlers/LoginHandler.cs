@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DemoCoreAPI.BusinessLogic.Handlers
 {
-    public class LoginHandler: IRequestHandler<LoginCommand, LoginAPIModel>
+    public class LoginHandler: IRequestHandler<LoginCommand, LoginApiModel>
     {
         private readonly ApiContext _context;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace DemoCoreAPI.BusinessLogic.Handlers
             _mapper = mapper;
         }
 
-        public async Task<LoginAPIModel> Handle(LoginCommand model, CancellationToken cancellationToken)
+        public async Task<LoginApiModel> Handle(LoginCommand model, CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new ArgumentNullException("LoginViewModel can not be null.");
@@ -34,7 +34,7 @@ namespace DemoCoreAPI.BusinessLogic.Handlers
             var user = _context.Users.Where(x => x.Email == model.Email && x.Password == hashedPassword).FirstOrDefault();
             if (user == null)
                 throw new NotFoundException("User was not found.");
-            return _mapper.Map<LoginAPIModel>(user);
+            return _mapper.Map<LoginApiModel>(user);
         }
     }
 }

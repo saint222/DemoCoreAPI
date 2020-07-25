@@ -1,8 +1,5 @@
-﻿using DemoCoreAPI.DomainModels.Enums;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
@@ -10,7 +7,7 @@ namespace DemoCoreAPI.DomainModels.Models
     {
         [Key]
         public long Id { get; set; }
-        public Regions Region { get; set; }
+        public int Region { get; set; }      // enum
         [Required]
         [MaxLength(50), MinLength(1)]
         public string District { get; set; }

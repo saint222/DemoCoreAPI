@@ -7,7 +7,7 @@ namespace DemoCoreAPI.BusinessLogic.Interfaces
 {
     public interface IAuthService
     {
-        RegisterAPIModel Register(RegisterBindingModel model);
-        LoginAPIModel Login(LoginBindingModel model);
+        RegisterApiModel Register(RegisterBindingModel model);
+        LoginApiModel Login(LoginBindingModel model);
     }
 }

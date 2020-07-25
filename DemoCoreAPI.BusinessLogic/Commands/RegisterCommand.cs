@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DemoCoreAPI.BusinessLogic.Commands
 {
-    public class RegisterCommand: IRequest<RegisterAPIModel>
+    public class RegisterCommand: IRequest<RegisterApiModel>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

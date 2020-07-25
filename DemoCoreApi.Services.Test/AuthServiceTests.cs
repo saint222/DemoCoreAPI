@@ -38,7 +38,7 @@ namespace DemoCoreApi.Services.Test
                 Password = "Welcome20!9",
                 PasswordConfirmation = "Welcome20!9"
             };
-            var expResult = new RegisterAPIModel()
+            var expResult = new RegisterApiModel()
             {
                 Message = "User has been created",
                 Success = true
@@ -65,7 +65,7 @@ namespace DemoCoreApi.Services.Test
                 Password = "Welcome20!9",
                 PasswordConfirmation = "Welcome20!9"
             };
-            var unexpResult = new RegisterAPIModel()
+            var unexpResult = new RegisterApiModel()
             {
                 Message = "User has not been created",
                 Success = false

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DemoCoreAPI.BusinessLogic.Handlers
 {
-    public class RegisterHandler : IRequestHandler<RegisterCommand, RegisterAPIModel>
+    public class RegisterHandler : IRequestHandler<RegisterCommand, RegisterApiModel>
     {
         private readonly ApiContext _context;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace DemoCoreAPI.BusinessLogic.Handlers
             _mapper = mapper;
         }
 
-        public async Task<RegisterAPIModel> Handle(RegisterCommand model, CancellationToken cancellationToken)
+        public async Task<RegisterApiModel> Handle(RegisterCommand model, CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new ArgumentNullException("RegisterViewModel can not be null.");
@@ -41,7 +41,7 @@ namespace DemoCoreAPI.BusinessLogic.Handlers
             var user = _mapper.Map<UserDb>(model);
             _context.Add(user);
             await _context.SaveChangesAsync(cancellationToken);
-            return _mapper.Map<RegisterAPIModel>(user);
+            return _mapper.Map<RegisterApiModel>(user);
         }
     }
 }

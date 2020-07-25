@@ -1,14 +1,11 @@
-﻿using DemoCoreAPI.DomainModels.Enums;
-using DemoCoreAPI.DomainModels.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Models
 
 {
-    public class PupilDb: IUserDb
+    public class PupilDb
     {
         [Key]
         public long Id { get; set; }
@@ -31,7 +28,7 @@ namespace DemoCoreAPI.DomainModels.Models
         [Required]
         [MaxLength(50), MinLength(1)]
         public string Password { get; set; }
-        public Roles Role { get; set; } = Roles.Pupil;
+        public int Role { get; set; } = 1;       // enum
         public ClassDb Class { get; set; }
         public SchoolDb School { get; set; }        
         public ICollection<ParentPupilDb> ParentPupils { get; set; }

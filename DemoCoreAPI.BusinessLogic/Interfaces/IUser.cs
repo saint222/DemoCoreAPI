@@ -1,9 +1,11 @@
 ﻿using DemoCoreAPI.DomainModels.Enums;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace DemoCoreAPI.DomainModels.Interfaces
+namespace DemoCoreAPI.BusinessLogic.Interfaces
 {
-    public interface IUserDb
+    public interface IUser
     {
         long Id { get; set; }
         string Email { get; set; }
