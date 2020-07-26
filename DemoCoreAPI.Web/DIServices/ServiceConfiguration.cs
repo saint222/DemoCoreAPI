@@ -15,7 +15,7 @@ namespace DemoCoreAPI.Web.DIServices
         public static void RegisterServices(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ApiContext>(options => options.UseSqlServer(connectionString));
-            services.AddScoped<IRepository<UserDb>, SqlServRepository<UserDb>>();
+            services.AddScoped<IRepository<User>, SqlServRepository<User>>();
             services.AddMediatR(typeof(RegisterHandler)); // add handlers as params: one, two, tree...
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAdminService, AdminService>();

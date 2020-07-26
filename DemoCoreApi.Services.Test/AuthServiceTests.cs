@@ -16,14 +16,14 @@ namespace DemoCoreApi.Services.Test
     public class AuthServiceTests
     {
         private IMapper _mapper;
-        private IRepository<UserDb> _repo;
+        private IRepository<User> _repo;
 
         [SetUp]
         public void Setup()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
             _mapper = new Mapper(mapperConfig);
-            _repo = new Mock<IRepository<UserDb>>().Object;
+            _repo = new Mock<IRepository<User>>().Object;
         }
 
         [Test]
@@ -175,7 +175,7 @@ namespace DemoCoreApi.Services.Test
             using (var context = GetContext())
             {
                 context.Database.EnsureDeleted(); // we need it here to run all the tests simultaneously
-                var repo = new SqlServRepository<UserDb>(context);
+                var repo = new SqlServRepository<User>(context);
                 var service = new AuthService(repo, _mapper);
                 service.Register(seed);
                 Assert.Throws<EmailDuplicateException>(() => service.Register(regModel));
@@ -235,7 +235,7 @@ namespace DemoCoreApi.Services.Test
 
             using (var context = GetContext())
             {
-                var repo = new SqlServRepository<UserDb>(context);
+                var repo = new SqlServRepository<User>(context);
                 var service = new AuthService(repo, _mapper);
                 var response = service.Login(logModel);
                 Assert.IsNull(response);                            // 404 NotFound
@@ -262,7 +262,7 @@ namespace DemoCoreApi.Services.Test
 
             using (var context = GetContext())
             {
-                var repo = new SqlServRepository<UserDb>(context);
+                var repo = new SqlServRepository<User>(context);
                 var service = new AuthService(repo, _mapper);
                 service.Register(seed);
                 var response = service.Login(logModel);

@@ -13,10 +13,10 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
 {
     public class AdminService : IAdminService
     {
-        private readonly IRepository<UserDb> _repo;
+        private readonly IRepository<User> _repo;
         private readonly IMapper _mapper;
 
-        public AdminService(IRepository<UserDb> repo, IMapper mapper)
+        public AdminService(IRepository<User> repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -46,7 +46,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
             var exists = _repo.Where(x => x.Email == model.Email).Any();
             if (exists)
                 throw new EmailDuplicateException("User with such email already exists.");
-            var newUser = _mapper.Map<UserDb>(model);
+            var newUser = _mapper.Map<User>(model);
             _repo.Add(newUser);
             _repo.SaveChanges();
             return _mapper.Map<NewUserApiModel>(newUser);

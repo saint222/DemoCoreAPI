@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class ParentDb
+    [NotMapped]
+    public class User
     {
         [Key]
         public long Id { get; set; }
@@ -27,7 +28,7 @@ namespace DemoCoreAPI.DomainModels.Models
         [Required]
         [MaxLength(50), MinLength(1)]
         public string Password { get; set; }
-        public int Role { get; set; } = 1;         // enum
-        public ICollection<ParentPupilDb> ParentPupils { get; set; }
+        public int Role { get; set; }            // enum
+        public string Discriminator { get; set; }
     }
 }

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DemoCoreAPI.DomainModels.Models
-
 {
-    public class PupilDb
+    public class Teacher
     {
         [Key]
         public long Id { get; set; }
@@ -28,9 +27,12 @@ namespace DemoCoreAPI.DomainModels.Models
         [Required]
         [MaxLength(50), MinLength(1)]
         public string Password { get; set; }
-        public int Role { get; set; } = 1;       // enum
-        public ClassDb Class { get; set; }
-        public SchoolDb School { get; set; }        
-        public ICollection<ParentPupilDb> ParentPupils { get; set; }
+        public int ProfessionalCategory { get; set; }   // enum
+        //public int Specialization { get; set; }         // enum
+        public long SchoolSubjectId { get; set; }
+        public SchoolSubject Specialization { get; set; }
+        public int Role { get; set; } = 3;              // enum
+        public School School { get; set; }
+        public ICollection<ClassTeacher> ClassTeachers { get; set; }
     }
 }

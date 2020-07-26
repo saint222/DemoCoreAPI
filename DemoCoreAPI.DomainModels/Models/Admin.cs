@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class AdminDb
+    public class Admin
     {
         [Key]
         public long Id { get; set; }

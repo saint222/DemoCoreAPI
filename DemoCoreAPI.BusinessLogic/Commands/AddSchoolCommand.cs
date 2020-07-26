@@ -10,6 +10,6 @@ namespace DemoCoreAPI.BusinessLogic.Commands
     public class AddSchoolCommand: IRequest<AddSchoolApiModel>
     {
         public int SchoolNumber { get; set; }
-        public SchoolAddress Address { get; set; }
+        public AddressBindingModel Address { get; set; }
     }
 }

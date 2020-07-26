@@ -6,11 +6,11 @@ using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class ClassTeacherDb
+    public class ClassTeacher
     {
-        public long TeacherDbId { get; set; }
-        public long ClassDbId { get; set; }
-        public TeacherDb Teacher { get; set; }
-        public ClassDb Class { get; set; }
+        public long TeacherId { get; set; }
+        public long ClassId { get; set; }
+        public Teacher Teacher { get; set; }
+        public Class Class { get; set; }
     }
 }

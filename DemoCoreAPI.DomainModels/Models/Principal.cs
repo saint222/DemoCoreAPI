@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class PrincipalDb
+    public class Principal
     {
         [Key]
         public long Id { get; set; }
@@ -27,7 +27,7 @@ namespace DemoCoreAPI.DomainModels.Models
         [MaxLength(50), MinLength(1)]
         public string Password { get; set; }
         public int Role { get; set; } = 2;    // enum
-        public long? SchoolDbId { get; set; }
-        public SchoolDb School { get; set; }
+        public long? SchoolId { get; set; }
+        public School School { get; set; }
     }
 }

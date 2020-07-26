@@ -4,14 +4,16 @@ using DemoCoreAPI.Data.SQLServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DemoCoreAPI.Data.SQLServer.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20200726090251_CommonAddress")]
+    partial class CommonAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Address", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.AddressDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,8 +41,20 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<long>("ParentDbId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PrincipalDbId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PupilDbId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Region")
                         .HasColumnType("int");
+
+                    b.Property<long>("SchoolDbId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Street")
                         .IsRequired()
@@ -49,10 +63,22 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.HasIndex("ParentDbId")
+                        .IsUnique();
+
+                    b.HasIndex("PrincipalDbId")
+                        .IsUnique();
+
+                    b.HasIndex("PupilDbId")
+                        .IsUnique();
+
+                    b.HasIndex("SchoolDbId")
+                        .IsUnique();
+
+                    b.ToTable("AddressDb");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Admin", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.AdminDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,7 +134,7 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Class", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ClassDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -131,58 +157,27 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                     b.ToTable("Classes");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ClassTeacher", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ClassTeacherDb", b =>
                 {
-                    b.Property<long>("ClassId")
+                    b.Property<long>("ClassDbId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("TeacherId")
+                    b.Property<long>("TeacherDbId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("ClassId", "TeacherId");
+                    b.HasKey("ClassDbId", "TeacherDbId");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("TeacherDbId");
 
                     b.ToTable("ClassTeachers");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Mark", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ParentDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateOfMark")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("PupilId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("SchoolSubjectId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PupilId");
-
-                    b.HasIndex("SchoolSubjectId");
-
-                    b.ToTable("Marks");
-                });
-
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Parent", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("AddressId")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -216,49 +211,26 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.ToTable("Parents");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ParentPupil", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ParentPupilDb", b =>
                 {
-                    b.Property<long>("ParentId")
+                    b.Property<long>("ParentDbId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PupilId")
+                    b.Property<long>("PupilDbId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("ParentId", "PupilId");
+                    b.HasKey("ParentDbId", "PupilDbId");
 
-                    b.HasIndex("PupilId");
+                    b.HasIndex("PupilDbId");
 
                     b.ToTable("ParentPupils");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.PhoneNumber", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("SchoolId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SchoolId");
-
-                    b.ToTable("SchoolPhoneNumbers");
-                });
-
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Principal", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.PrincipalDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -296,27 +268,24 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<long?>("SchoolId")
+                    b.Property<long?>("SchoolDbId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolId")
+                    b.HasIndex("SchoolDbId")
                         .IsUnique()
-                        .HasFilter("[SchoolId] IS NOT NULL");
+                        .HasFilter("[SchoolDbId] IS NOT NULL");
 
                     b.ToTable("Principals");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Pupil", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.PupilDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("AddressId")
-                        .HasColumnType("bigint");
 
                     b.Property<long?>("ClassId")
                         .HasColumnType("bigint");
@@ -357,8 +326,6 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
-
                     b.HasIndex("ClassId");
 
                     b.HasIndex("SchoolId");
@@ -366,7 +333,82 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                     b.ToTable("Pupils");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.School", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.SchoolAddressDb", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("District")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("HouseNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Locality")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("Region")
+                        .HasColumnType("int");
+
+                    b.Property<long>("SchoolDbId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolDbId");
+
+                    b.ToTable("SchoolAddresses");
+                });
+
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.SchoolDb", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SchoolNumber")
+                        .HasColumnType("int")
+                        .HasMaxLength(999);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Schools");
+                });
+
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.SchoolPhoneNumberDb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SchoolId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("SchoolPhoneNumbers");
+                });
+
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.TeacherDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -375,39 +417,6 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
 
                     b.Property<long?>("AddressId")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("SchoolNumber")
-                        .HasColumnType("int")
-                        .HasMaxLength(999);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.ToTable("Schools");
-                });
-
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.SchoolSubject", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SchoolSubjects");
-                });
-
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Teacher", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -446,20 +455,19 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                     b.Property<long?>("SchoolId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("SchoolSubjectId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Specialization")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolId");
+                    b.HasIndex("AddressId");
 
-                    b.HasIndex("SchoolSubjectId")
-                        .IsUnique();
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.VicePrincipal", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.VicePrincipalDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -510,113 +518,118 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
                     b.ToTable("VicePrincipals");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Class", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.AddressDb", b =>
                 {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.School", "School")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.ParentDb", "Parent")
+                        .WithOne("Address")
+                        .HasForeignKey("DemoCoreAPI.DomainModels.Models.AddressDb", "ParentDbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.PrincipalDb", "Principal")
+                        .WithOne("Address")
+                        .HasForeignKey("DemoCoreAPI.DomainModels.Models.AddressDb", "PrincipalDbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.PupilDb", "Pupil")
+                        .WithOne("Address")
+                        .HasForeignKey("DemoCoreAPI.DomainModels.Models.AddressDb", "PupilDbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolDb", "School")
+                        .WithOne("Address")
+                        .HasForeignKey("DemoCoreAPI.DomainModels.Models.AddressDb", "SchoolDbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ClassDb", b =>
+                {
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolDb", "School")
                         .WithMany("Classes")
                         .HasForeignKey("SchoolId");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ClassTeacher", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ClassTeacherDb", b =>
                 {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Class", "Class")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.ClassDb", "Class")
                         .WithMany("ClassTeachers")
-                        .HasForeignKey("ClassId")
+                        .HasForeignKey("ClassDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Teacher", "Teacher")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.TeacherDb", "Teacher")
                         .WithMany("ClassTeachers")
-                        .HasForeignKey("TeacherId")
+                        .HasForeignKey("TeacherDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Mark", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ParentPupilDb", b =>
                 {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Pupil", "Pupil")
-                        .WithMany("Marks")
-                        .HasForeignKey("PupilId");
-
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolSubject", "SchoolSubject")
-                        .WithMany("Marks")
-                        .HasForeignKey("SchoolSubjectId");
-                });
-
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Parent", b =>
-                {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Address", "Address")
-                        .WithMany("Parents")
-                        .HasForeignKey("AddressId");
-                });
-
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.ParentPupil", b =>
-                {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Parent", "Parent")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.ParentDb", "Parent")
                         .WithMany("ParentPupils")
-                        .HasForeignKey("ParentId")
+                        .HasForeignKey("ParentDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Pupil", "Pupil")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.PupilDb", "Pupil")
                         .WithMany("ParentPupils")
-                        .HasForeignKey("PupilId")
+                        .HasForeignKey("PupilDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.PhoneNumber", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.PrincipalDb", b =>
                 {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.School", "School")
-                        .WithMany("PhoneNumbers")
-                        .HasForeignKey("SchoolId");
-                });
-
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Principal", b =>
-                {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.School", "School")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolDb", "School")
                         .WithOne("Principal")
-                        .HasForeignKey("DemoCoreAPI.DomainModels.Models.Principal", "SchoolId");
+                        .HasForeignKey("DemoCoreAPI.DomainModels.Models.PrincipalDb", "SchoolDbId");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Pupil", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.PupilDb", b =>
                 {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Address", "Address")
-                        .WithMany("Pupils")
-                        .HasForeignKey("AddressId");
-
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Class", "Class")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.ClassDb", "Class")
                         .WithMany("Pupils")
                         .HasForeignKey("ClassId");
 
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.School", "School")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolDb", "School")
                         .WithMany("Pupils")
                         .HasForeignKey("SchoolId");
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.School", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.SchoolAddressDb", b =>
                 {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.Address", "Address")
-                        .WithMany("Schools")
-                        .HasForeignKey("AddressId");
-                });
-
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.Teacher", b =>
-                {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.School", "School")
-                        .WithMany("Teachers")
-                        .HasForeignKey("SchoolId");
-
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolSubject", "Specialization")
-                        .WithOne("Teacher")
-                        .HasForeignKey("DemoCoreAPI.DomainModels.Models.Teacher", "SchoolSubjectId")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolDb", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.VicePrincipal", b =>
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.SchoolPhoneNumberDb", b =>
                 {
-                    b.HasOne("DemoCoreAPI.DomainModels.Models.School", "School")
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolDb", "School")
+                        .WithMany("SchoolPhoneNumbers")
+                        .HasForeignKey("SchoolId");
+                });
+
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.TeacherDb", b =>
+                {
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.AddressDb", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolDb", "School")
+                        .WithMany("Teachers")
+                        .HasForeignKey("SchoolId");
+                });
+
+            modelBuilder.Entity("DemoCoreAPI.DomainModels.Models.VicePrincipalDb", b =>
+                {
+                    b.HasOne("DemoCoreAPI.DomainModels.Models.SchoolDb", "School")
                         .WithMany("VicePrincipals")
                         .HasForeignKey("SchoolId");
                 });

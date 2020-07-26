@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoCoreAPI.Data.SQLServer.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    partial class ApiContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -155,6 +155,12 @@ namespace DemoCoreAPI.Data.SQLServer.Migrations
 
                     b.Property<DateTime>("DateOfMark")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsTermMark")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsYearMark")
+                        .HasColumnType("bit");
 
                     b.Property<long?>("PupilId")
                         .HasColumnType("bigint");

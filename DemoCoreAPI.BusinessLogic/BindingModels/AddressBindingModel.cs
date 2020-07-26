@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DemoCoreAPI.BusinessLogic.BindingModels
 {
-    public class SchoolAddress
+    public class AddressBindingModel
     {
         public Regions Region { get; set; }      // enum
         public string District { get; set; }

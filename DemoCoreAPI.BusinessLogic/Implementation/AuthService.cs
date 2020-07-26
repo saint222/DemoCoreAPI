@@ -14,9 +14,9 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
 {
     public class AuthService : IAuthService
     {
-        private readonly IRepository<UserDb> _repo;
+        private readonly IRepository<User> _repo;
         private readonly IMapper _mapper;
-        public AuthService(IRepository<UserDb> repo, IMapper mapper)
+        public AuthService(IRepository<User> repo, IMapper mapper)
         {
             _repo = repo;
             if (repo == null)
@@ -50,7 +50,7 @@ namespace DemoCoreAPI.BusinessLogic.Implementation
                 throw new EmailDuplicateException("User with such email already exists.");
 
             model.Password = HashPassword(model.Password);
-            var user = _mapper.Map<UserDb>(model);
+            var user = _mapper.Map<User>(model);
             _repo.Add(user);
             _repo.SaveChanges();
             return _mapper.Map<RegisterApiModel>(user);

@@ -14,24 +14,24 @@ namespace DemoCoreAPI.BusinessLogic.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<UserDb, LoginBindingModel>().ReverseMap();
-            CreateMap<UserDb, LoginApiModel>().ReverseMap();
-            CreateMap<UserDb, RegisterApiModel>().ReverseMap();
-            CreateMap<UserDb, RegisterBindingModel>().ReverseMap();
-            CreateMap<UserDb, NewUserBindingModel>().ReverseMap();
-            CreateMap<UserDb, UpdateUserBindingModel>().ReverseMap();
-            CreateMap<UserDb, NewUserApiModel>().ReverseMap();
-            CreateMap<UserDb, UpdatedUserApiModel>().ReverseMap();
-            CreateMap<UserDb, UserApiModel>().ReverseMap();
-            CreateMap<UserDb, DeleteUserApiModel>().ReverseMap();
-            CreateMap<UserDb, RegisterCommand>().ReverseMap();
-            CreateMap<UserDb, LoginCommand>().ReverseMap();
+            CreateMap<User, LoginBindingModel>().ReverseMap();
+            CreateMap<User, LoginApiModel>().ReverseMap();
+            CreateMap<User, RegisterApiModel>().ReverseMap();
+            CreateMap<User, RegisterBindingModel>().ReverseMap();
+            CreateMap<User, NewUserBindingModel>().ReverseMap();
+            CreateMap<User, UpdateUserBindingModel>().ReverseMap();
+            CreateMap<User, NewUserApiModel>().ReverseMap();
+            CreateMap<User, UpdatedUserApiModel>().ReverseMap();
+            CreateMap<User, UserApiModel>().ReverseMap();
+            CreateMap<User, DeleteUserApiModel>().ReverseMap();
+            CreateMap<User, RegisterCommand>().ReverseMap();
+            CreateMap<User, LoginCommand>().ReverseMap();
 
-            CreateMap<AddSchoolCommand, SchoolDb>()
-                .ForMember(dest => dest.SchoolAddress, 
+            CreateMap<AddSchoolCommand, School>()
+                .ForMember(dest => dest.Address, 
                 e => e.MapFrom(src => src.Address)).ReverseMap();
-            CreateMap<SchoolAddress, SchoolAddressDb>().ReverseMap();
-            CreateMap<SchoolDb, AddSchoolApiModel>().ReverseMap();
+            CreateMap<AddressBindingModel, Address>().ReverseMap();
+            CreateMap<School, AddSchoolApiModel>().ReverseMap();
         }
     }
 }

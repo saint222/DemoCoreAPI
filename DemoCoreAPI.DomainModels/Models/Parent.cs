@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class VicePrincipalDb
+    public class Parent
     {
         [Key]
         public long Id { get; set; }
@@ -26,8 +27,8 @@ namespace DemoCoreAPI.DomainModels.Models
         [Required]
         [MaxLength(50), MinLength(1)]
         public string Password { get; set; }
-        public int ManagementArea { get; set; }    // enum
-        public int Role { get; set; } = 4;         // enum
-        public SchoolDb School { get; set; }
+        public int Role { get; set; } = 1;         // enum
+        public ICollection<ParentPupil> ParentPupils { get; set; }
+        public Address Address { get; set; }
     }
 }

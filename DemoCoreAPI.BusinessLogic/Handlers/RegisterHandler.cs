@@ -38,7 +38,7 @@ namespace DemoCoreAPI.BusinessLogic.Handlers
                 throw new EmailDuplicateException("User with such email already exists.");
 
             model.Password = Utilities.Utilities.HashPassword(model.Password);
-            var user = _mapper.Map<UserDb>(model);
+            var user = _mapper.Map<User>(model);
             _context.Add(user);
             await _context.SaveChangesAsync(cancellationToken);
             return _mapper.Map<RegisterApiModel>(user);

@@ -5,13 +5,13 @@ using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class SchoolPhoneNumberDb
+    public class PhoneNumber
     {
         [Key]
         public int Id { get; set; }
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string Number { get; set; }
-        public SchoolDb School { get; set; }
+        public School School { get; set; }
     }
 }

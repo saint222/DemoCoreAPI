@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace DemoCoreAPI.DomainModels.Models
 {
-    public class SchoolAddressDb
+    public class Address
     {
         [Key]
         public long Id { get; set; }
@@ -20,7 +22,8 @@ namespace DemoCoreAPI.DomainModels.Models
         [Required]
         [Range(1, 999)]
         public int HouseNumber { get; set; }
-        public long SchoolDbId { get; set; }
-        public SchoolDb School { get; set; }
+        public ICollection<School> Schools { get; set; }
+        public ICollection<Pupil> Pupils { get; set; }
+        public ICollection<Parent> Parents { get; set; }
     }
 }
