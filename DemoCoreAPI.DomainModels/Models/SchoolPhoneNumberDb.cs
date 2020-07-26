@@ -12,6 +12,6 @@ namespace DemoCoreAPI.DomainModels.Models
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string Number { get; set; }
-        public SchoolDb School { get; set; }
+        public School School { get; set; }
     }
 }

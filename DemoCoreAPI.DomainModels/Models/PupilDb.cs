@@ -30,7 +30,7 @@ namespace DemoCoreAPI.DomainModels.Models
         public string Password { get; set; }
         public int Role { get; set; } = 1;       // enum
         public ClassDb Class { get; set; }
-        public SchoolDb School { get; set; }        
+        public School School { get; set; }        
         public ICollection<ParentPupilDb> ParentPupils { get; set; }
     }
 }

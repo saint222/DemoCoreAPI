@@ -32,9 +32,9 @@ namespace DemoCoreAPI.BusinessLogic.Handlers
 
             var exists = _context.Schools.FirstOrDefault(
                 x => x.SchoolNumber == model.SchoolNumber && 
-                x.SchoolAddress.District == model.Address.District && 
-                x.SchoolAddress.Locality == model.Address.Locality &&
-                x.SchoolAddress.Region == (int)model.Address.Region);
+                x.Address.District == model.Address.District && 
+                x.Address.Locality == model.Address.Locality &&
+                x.Address.Region == (int)model.Address.Region);
             if (exists != null)
                 throw new EmailDuplicateException("This school already exists.");
             //var school = new SchoolDb
@@ -50,7 +50,7 @@ namespace DemoCoreAPI.BusinessLogic.Handlers
             //    }
 
             //};
-            var school = _mapper.Map<SchoolDb>(model);
+            var school = _mapper.Map<School>(model);
             _context.Add(school);
             await _context.SaveChangesAsync(cancellationToken);
             return _mapper.Map<AddSchoolApiModel>(school);

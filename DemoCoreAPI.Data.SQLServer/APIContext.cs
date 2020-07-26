@@ -1,4 +1,5 @@
-﻿using DemoCoreAPI.DomainModels.Models;
+﻿using DemoCoreAPI.Data.SQLServer.Maps;
+using DemoCoreAPI.DomainModels.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Globalization;
@@ -16,7 +17,7 @@ namespace DemoCoreAPI.Data.SQLServer
                                     // This API is exclusive with Database.EnsureCreated().
             }
         }
-        public DbSet<SchoolDb> Schools { get; set; }
+        public DbSet<School> Schools { get; set; }
         public DbSet<ClassDb> Classes { get; set; }
         public DbSet<PrincipalDb> Principals { get; set; }
         public DbSet<VicePrincipalDb> VicePrincipals { get; set; }
@@ -25,7 +26,7 @@ namespace DemoCoreAPI.Data.SQLServer
         public DbSet<UserDb> Users { get; set; }
         public DbSet<PupilDb> Pupils { get; set; }
         public DbSet<SchoolPhoneNumberDb> SchoolPhoneNumbers { get; set; }
-        public DbSet<SchoolAddressDb> SchoolAddresses { get; set; }
+        public DbSet<Address> SchoolAddresses { get; set; }
         public DbSet<ParentDb> Parents { get; set; }
         public DbSet<ClassTeacherDb> ClassTeachers { get; set; }
         public DbSet<ParentPupilDb> ParentPupils { get; set; }
@@ -34,7 +35,7 @@ namespace DemoCoreAPI.Data.SQLServer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ParentPupilDb>()
-                .HasKey(pp => new { pp.ParentDbId, pp.PupilDbId});
+                .HasKey(pp => new { pp.ParentDbId, pp.PupilDbId}); // User all of them in the Maps!
             modelBuilder.Entity<ParentPupilDb>()
                 .HasOne(p => p.Parent)
                 .WithMany(p => p.ParentPupils)
@@ -54,6 +55,8 @@ namespace DemoCoreAPI.Data.SQLServer
                 .HasOne(t => t.Teacher)
                 .WithMany(p => p.ClassTeachers)
                 .HasForeignKey(p => p.TeacherDbId);
+
+            modelBuilder.ApplyConfiguration(new AddressMap());
 
             modelBuilder.Entity<AdminDb>().HasData(
                 new AdminDb

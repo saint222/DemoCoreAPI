@@ -27,11 +27,11 @@ namespace DemoCoreAPI.BusinessLogic.Mapping
             CreateMap<UserDb, RegisterCommand>().ReverseMap();
             CreateMap<UserDb, LoginCommand>().ReverseMap();
 
-            CreateMap<AddSchoolCommand, SchoolDb>()
-                .ForMember(dest => dest.SchoolAddress, 
+            CreateMap<AddSchoolCommand, School>()
+                .ForMember(dest => dest.Address, 
                 e => e.MapFrom(src => src.Address)).ReverseMap();
-            CreateMap<SchoolAddress, SchoolAddressDb>().ReverseMap();
-            CreateMap<SchoolDb, AddSchoolApiModel>().ReverseMap();
+            CreateMap<SchoolAddress, Address>().ReverseMap();
+            CreateMap<School, AddSchoolApiModel>().ReverseMap();
         }
     }
 }

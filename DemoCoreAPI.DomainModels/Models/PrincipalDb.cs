@@ -28,6 +28,6 @@ namespace DemoCoreAPI.DomainModels.Models
         public string Password { get; set; }
         public int Role { get; set; } = 2;    // enum
         public long? SchoolDbId { get; set; }
-        public SchoolDb School { get; set; }
+        public School School { get; set; }
     }
 }

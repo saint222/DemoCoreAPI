@@ -30,7 +30,7 @@ namespace DemoCoreAPI.DomainModels.Models
         public int ProfessionalCategory { get; set; }   // enum
         public int Specialization { get; set; }         // enum
         public int Role { get; set; } = 3;              // enum
-        public SchoolDb School { get; set; }
+        public School School { get; set; }
         public ICollection<ClassTeacherDb> ClassTeachers { get; set; }
     }
 }
