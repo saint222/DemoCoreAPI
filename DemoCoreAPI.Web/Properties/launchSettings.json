@@ -5,7 +5,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:53481",
-      "sslPort": 44306
+      "sslPort": 44306                              //localhost:44306/swagger/index.html
     }
   },
   "profiles": {

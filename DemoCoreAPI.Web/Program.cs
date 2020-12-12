@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
+using System.Security.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace DemoCoreAPIWeb
@@ -44,11 +42,20 @@ namespace DemoCoreAPIWeb
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+//#if DEBUG
+//                    webBuilder.ConfigureKestrel(options =>
+//                    {
+//                        options.Listen(IPAddress.Any, 84, listenOptions =>
+//                        {
+//                            listenOptions.UseHttps("certificate.pfx", "pwd");
+//                        });
+//                    });
+//#endif
                     webBuilder.UseStartup<Startup>()
-                    .UseDefaultServiceProvider(options =>
-                    {
-                        options.ValidateScopes = true; //Setting to true will validate scopes in all environments. This has performance implications.
-                    });
+                        .UseDefaultServiceProvider(options =>
+                        {
+                            options.ValidateScopes = true; //Setting to true will validate scopes in all environments. This has performance implications.
+                        });
                 });
         }
     }
